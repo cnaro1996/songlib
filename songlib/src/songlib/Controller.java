@@ -1,4 +1,4 @@
-package sample;
+package songlib;
 
 public class Controller {
 }
