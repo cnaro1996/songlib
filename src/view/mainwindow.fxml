@@ -10,8 +10,9 @@
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller = "view.Controller">
     <left>
     	<GridPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="400.0">
+	    	<padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
 			<children>
-				<ListView layoutY="-1.0" prefHeight="200.0" prefWidth="400.0" />
+				<ListView layoutY="-1.0" prefHeight="200.0" prefWidth="400.0" fx:id="songListView"/>
 			</children>
 		</GridPane>
     </left>
@@ -33,7 +34,27 @@
 		</GridPane>
     </right>
     <bottom>
-        <GridPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" />
+        <GridPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" fx:id = "blankPane"/>
+        <GridPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" 
+			xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" fx:id = "detailsPane">
+			
+			<padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+			
+			<columnConstraints>
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+			</columnConstraints>
+			
+			<rowConstraints>
+				<RowConstraints minHeight="30.0" prefHeight="50.0" valignment="CENTER" />
+			</rowConstraints>
+			
+			<children>
+				<Text fx:id = "titleDetailText" style="-fx-font: BOLD 45 Arial;" text="Title" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+				<Text fx:id = "artistDetailText" style="-fx-font: NORMAL 40 Arial;" text="Artist" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+				<Text fx:id = "albumDetailText" style="-fx-font: NORMAL 30 Arial;" text="Album" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+				<Text fx:id = "yearDetailText" style="-fx-font: NORMAL 20 Arial;" text="Year" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+			</children>
+		</GridPane>
     </bottom>
     <top>
 		<GridPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" />
