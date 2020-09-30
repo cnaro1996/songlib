@@ -52,4 +52,9 @@ public class Song {
 		this.year = year;
 	}
 	
+	@Override
+	public String toString() {
+		return name + " by " + artist; 
+	}
+	
 }
