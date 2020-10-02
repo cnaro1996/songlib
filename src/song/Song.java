@@ -1,3 +1,11 @@
+/*
+ * Christopher Naro	(cjn64)
+ * Zabir Rahman (zwr3)
+ * 
+ * Software Methodology
+ * Assignment 1: SongLib
+ */
+
 package song;
 
 public class Song {
@@ -55,6 +63,11 @@ public class Song {
 	@Override
 	public String toString() {
 		return name + " by " + artist; 
+	}
+	
+	public boolean equals(Song toCompare) {
+		return (this.name.trim().equalsIgnoreCase(toCompare.name.trim()) &&
+				this.artist.trim().equalsIgnoreCase(toCompare.artist.trim()));
 	}
 	
 	public String toFile() {

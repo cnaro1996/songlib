@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- 
+	Christopher Naro (cjn64)
+	Zabir Rahman (zwr3)
+	Software Methodology
+	Assignment 1: SongLib
+ -->
+
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>

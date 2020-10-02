@@ -1,3 +1,11 @@
+/*
+ * Christopher Naro	(cjn64)
+ * Zabir Rahman (zwr3)
+ * 
+ * Software Methodology
+ * Assignment 1: SongLib
+ */
+
 package view;
 
 import javafx.collections.FXCollections;
@@ -32,6 +40,8 @@ public class Controller {
 	@FXML Text albumDetailText;
 	@FXML Text yearDetailText;
 	@FXML Button addBtn;
+	@FXML Button editBtn;
+	@FXML Button deleteBtn;
 	@FXML TextField nameTxtField;
 	@FXML TextField artistTxtField;
 	@FXML TextField albumTxtField;
@@ -50,50 +60,152 @@ public class Controller {
 		initList();
 	}
 	
+	public void buttonListener(ActionEvent e) {
+		Button b = (Button)e.getSource();
+		if(b == addBtn) {
+			mainPane.setBottom(addPane);
+		}
+		else if (b == confirmAddBtn) {
+			confirmAdd();
+		}
+		else if (b == cancelAddBtn) {
+			clearBottomPane();
+			showSongDetails();
+		}
+		else if (b == editBtn) {
+//			TODO: CHRIS
+		}
+		else if (b == deleteBtn) {
+//			TODO: CHRIS
+		}
+	}
+	
+	/*
+	 * Initialize the song ListView from the library
+	 */
 	private void initList() {		
-		//create an ObservableList from an ArrayList
 		obsList = FXCollections.observableArrayList();
+		readLibraryFromFile();
+//		TODO:  CHRIS - SORT LIST 
+		if(!obsList.isEmpty()) {
+			songListView.getSelectionModel().select(0);
+			showSongDetails();
+		}
+		songListView.getSelectionModel().selectedIndexProperty().addListener(
+				(obs, oldVal, newVal) -> { showSongDetails(); });
+	}
+	
+	/*
+	 * Display song details pane and populate with correct info
+	 */
+	private void showSongDetails() {
+		mainPane.setBottom(detailsPane);
+		Song currentSong = songListView.getSelectionModel().getSelectedItem();
+		if(null != currentSong) {
+			String name = currentSong.getName().length() > 25 ? 
+					currentSong.getName().substring(0, 21) + "..." : currentSong.getName();
+			String artist = currentSong.getArtist().length() > 25 ? 
+					currentSong.getArtist().substring(0, 21) + "..." : currentSong.getArtist();
+			String album = currentSong.getAlbum().length() > 35 ? 
+					currentSong.getAlbum().substring(0, 31) + "..." : currentSong.getAlbum();
+			
+			nameDetailText.setText(name);
+			artistDetailText.setText(artist);
+			albumDetailText.setText(album);
+			yearDetailText.setText(currentSong.getYear());
+		}
+	}
+	
+	/*
+	 * Add a song to the list by getting the user entered 
+	 * attributes from the text fields. 
+	 * Pops up an error if the name and/or artist field is empty 
+	 */
+	private void confirmAdd() {
+		String name = nameTxtField.getText();
+		String artist = artistTxtField.getText();
+		String album = albumTxtField.getText();
+		String year = yearTxtField.getText();
 		
+		if(name.isEmpty() || artist.isEmpty()) {
+			showAlert("Name and Artist Cannot be Empty!", 
+					"Please enter a song title and/or artist");
+		} else {
+			Song newSong = new Song(name, artist, album, year);
+			if(isDuplicate(newSong)) {
+				showAlert("This Song Already Exists!", 
+						"Cannot add because this song already exists");
+			} else {
+				try {
+					if(0 <= Integer.parseInt(year) && Integer.parseInt(year) <= 2020) {
+//						TODO: CHRIS - ADD SONG IN CORRCT POSITION 
+						obsList.add(newSong);
+						songListView.setItems(obsList);
+						songListView.getSelectionModel().select(newSong);
+						showSongDetails();
+					} else {
+						throw new IllegalArgumentException();
+					}
+				} catch (Exception e) {
+					showAlert("Invalid Input!", 
+							"Please enter a valid year up to 2020, or leave it empty");
+				}
+			}
+		}
+	}
+	
+	/*
+	 * Reads in the song library from a text file called "songLibrary.txt"
+	 * Uses '~' to separate song attributes (name, artist, album, year)
+	 * Uses '\n' to separate individual songs 
+	 * Reads one character at a time
+	 */
+	private void readLibraryFromFile() {
 		try {
 			File library = new File("songLibrary.txt");
 		    if(library.exists() && library.length() != 0) {
 				BufferedReader libReader = new BufferedReader(new FileReader(library));
-				int buffer = 0;
-				int count = 0;
-				String word = "";
+				int buffer = 0; //variable to hold what's being read in
+				int count = 0; //count to track which song attribute is being read
+				String current = ""; //holds the current song attribute
 				String name = "";
 				String artist = "";
 				String album = "";
 				String year = "";
 				while((buffer = libReader.read()) != -1) {
-					char character = (char) buffer;
-					if(character == '~') {
+					//convert int value read to a character 
+					char character = (char) buffer; 
+					if(character == '~') { 
 						if (count == 0) {
-							name = String.valueOf(word);
+							name = String.valueOf(current);
 						}
 						else if (count == 1) {
-							artist = String.valueOf(word);
+							artist = String.valueOf(current);
 						}
 						else if (count == 2) {
-							album = String.valueOf(word);
+							album = String.valueOf(current);
 						}
-						count ++;
-						word = "";
+						//increment count to correspond to the next attribute
+						count ++; 
+						//reset the current attribute 
+						current = ""; 
 					}
 					else if (character == '\n') {
-						year = String.valueOf(word);
-						
+						//last attribute read in before a new song is the year
+						year = String.valueOf(current); 
 						Song newSong = new Song (name, artist, album, year);
 						obsList.add(newSong);
 						
-						word = "";
+						//reset all fields for the next song
+						current = "";
 						name = "";
 						artist = "";
 						album = "";
 						year = "";
 						count = 0;
 					} else {
-						word = word.concat(""+character);
+						//concat the current character to the current attribute 
+						current = current.concat(""+character);
 					}
 				}
 				libReader.close();
@@ -104,57 +216,42 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
-		
-		//set listener for the items
-		songListView.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> { showSongDetails(); });
 	}
 	
-	private void showSongDetails() {
-		mainPane.setBottom(detailsPane);
-		Song currentSong = songListView.getSelectionModel().getSelectedItem();
-		nameDetailText.setText(currentSong.getName());
-		artistDetailText.setText(currentSong.getArtist());
-		albumDetailText.setText(currentSong.getAlbum());
-		yearDetailText.setText(currentSong.getYear());
-	}
-	
-	public void buttonListener(ActionEvent e) {
-		Button b = (Button)e.getSource();
-		if(b == addBtn) {
-			mainPane.setBottom(addPane);
-		}
-		else if (b == confirmAddBtn) {
-			String name = nameTxtField.getText();
-			String artist = artistTxtField.getText();
-			String album = albumTxtField.getText();
-			String year = yearTxtField.getText();
-			
-			if(name.isEmpty() || artist.isEmpty()) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.initOwner(mainStage);
-				alert.setTitle("Error");
-				alert.setHeaderText("Name and Artist cannot be empty");
-				String content = "Please enter a song title and/or artist";
-				alert.setContentText(content);
-				alert.showAndWait();
-			} else {
-				Song newSong = new Song(name, artist, album, year);
-				obsList.add(newSong);
-				songListView.setItems(obsList);
-				resetBottomPane();
-			}
-		}
-		else if (b == cancelAddBtn) {
-			resetBottomPane();
-		}
-	}
-	
-	private void resetBottomPane () {
+	/*
+	 * Resets all field in the different bottom panes 
+	 * and sets the bottom to the blank pane
+	 */
+	private void clearBottomPane () {
 		nameTxtField.clear();
 		artistTxtField.clear();
 		albumTxtField.clear();
 		yearTxtField.clear();
 		mainPane.setBottom(blankPane);
+	}
+	
+	/*
+	 * Checks to see if song already exists 
+	 */
+	private boolean isDuplicate(Song toCheck) {
+		for (Song s : obsList) {
+			if(s.equals(toCheck)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/*
+	 * Pop up alert
+	 */
+	private void showAlert(String header, String content) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.initOwner(mainStage);
+		alert.setTitle("Error");
+		alert.setHeaderText(header);
+		alert.setContentText(content);
+		alert.showAndWait();
 	}
 	
 	public ObservableList<Song> getObsList() {

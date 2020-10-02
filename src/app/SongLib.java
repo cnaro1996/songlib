@@ -1,9 +1,16 @@
+/*
+ * Christopher Naro	(cjn64)
+ * Zabir Rahman (zwr3)
+ * 
+ * Software Methodology
+ * Assignment 1: SongLib
+ */
+
 package app;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
