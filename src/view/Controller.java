@@ -59,27 +59,48 @@ public class Controller {
 		mainPane.setBottom(blankPane);
 		initList();
 	}
+
+	/**
+	 * Alphabetizes a list of songs by name. If duplicate song names exist,
+	 * artist names are then used for order priority. Incomplete - waiting
+	 * for further clarification on some edge cases by the instructors.
+	 * @param list
+	 */
+	public void alphabetizeList(ObservableList<Song> list){
+		Song[] temp = new Song[list.size()];
+		// Store the ordered songs in an array.
+		for(int i=0; i<temp.length; i++){
+			// Iterate through each letter of the alphabet
+			// until covered all letters or we reach the
+			// end of the list.
+			for(int j=0; j < 26 || list.size() == 0; j++){
+				// Compare the current letter to each
+				// song's name.
+				for(int k=0; k < list.size(); k++){
+
+				}
+			}
+		}
+		return;
+	}
 	
+
 	public void buttonListener(ActionEvent e) {
-		Button b = (Button)e.getSource();
-		if(b == addBtn) {
+		Button b = (Button) e.getSource();
+		if (b == addBtn) {
 			mainPane.setBottom(addPane);
-		}
-		else if (b == confirmAddBtn) {
+		} else if (b == confirmAddBtn) {
 			confirmAdd();
-		}
-		else if (b == cancelAddBtn) {
+		} else if (b == cancelAddBtn) {
 			clearBottomPane();
 			showSongDetails();
-		}
-		else if (b == editBtn) {
+		} else if (b == editBtn) {
 //			TODO: CHRIS
-		}
-		else if (b == deleteBtn) {
+		} else if (b == deleteBtn) {
 //			TODO: CHRIS
 		}
 	}
-	
+
 	/*
 	 * Initialize the song ListView from the library
 	 */
