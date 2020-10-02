@@ -105,6 +105,42 @@
 					text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction = "#buttonListener" />
 			</children>
 		</GridPane>
+		<GridPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0"
+				  alignment="center" hgap="10" vgap="10" fx:id = "editPane">
+
+			<padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+			<columnConstraints>
+				<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+				<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
+			</columnConstraints>
+
+			<rowConstraints>
+				<RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" />
+			</rowConstraints>
+
+			<children>
+				<Text text="After you're finished editing, click finish to save your changes."
+					  GridPane.columnIndex="0" GridPane.rowIndex="0"
+					  GridPane.columnSpan="2"/>
+				<Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+				<TextField fx:id = "editNameTxtField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+				<Label text="Artist" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+				<TextField fx:id = "editArtistTxtField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+				<Label text="Album (Optional)" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+				<TextField fx:id = "editAlbumTxtField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+				<Label text="Year (Optional)" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+				<TextField fx:id = "editYearTxtField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+				<Button fx:id = "editFinishBtn" prefHeight="17.0" prefWidth="130.0"
+						text="Finish" GridPane.columnIndex="0" GridPane.rowIndex="5" onAction = "#buttonListener" />
+				<Button fx:id = "editCancelBtn" prefHeight="17.0" prefWidth="130.0"
+						text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction = "#buttonListener" />
+			</children>
+		</GridPane>
     </bottom>
     <top>
 		<GridPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" />

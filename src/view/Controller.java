@@ -34,6 +34,7 @@ public class Controller {
 	@FXML GridPane blankPane;
 	@FXML GridPane detailsPane;
 	@FXML GridPane addPane;
+	@FXML GridPane editPane;
 	@FXML ListView<Song> songListView;
 	@FXML Text nameDetailText;
 	@FXML Text artistDetailText;
@@ -48,8 +49,13 @@ public class Controller {
 	@FXML TextField yearTxtField;
 	@FXML Button confirmAddBtn;
 	@FXML Button cancelAddBtn;
-	
-	
+	@FXML Button editFinishBtn;
+	@FXML Button editCancelBtn;
+	@FXML TextField editNameTxtField;
+	@FXML TextField editArtistTxtField;
+	@FXML TextField editAlbumTxtField;
+	@FXML TextField editYearTxtField;
+
 	private ObservableList<Song> obsList;
 
 	private Stage mainStage;
@@ -99,10 +105,70 @@ public class Controller {
 			clearBottomPane();
 			showSongDetails();
 		} else if (b == editBtn) {
-//			TODO: CHRIS
+			setToEditPane();
+		} else if(b == editFinishBtn){
+			finishEditing();
+		} else if (b == editCancelBtn) {
+
 		} else if (b == deleteBtn) {
 //			TODO: CHRIS
 		}
+	}
+
+	/**
+	 * Reloads and alphabetizes the song list.
+	 *
+	 * @param selection which song in the song list you'd like to have selected.
+	 */
+	private void updateSongList(Song selection){
+		alphabetizeList(obsList);
+		songListView.setItems(obsList);
+		songListView.getSelectionModel().select(selection);
+		showSongDetails();
+	}
+
+	/**
+	 * Sets the bottom pane to the edit scene
+	 */
+	private void setToEditPane() {
+		mainPane.setBottom(editPane);
+		Song selection = songListView.getSelectionModel().getSelectedItem();
+		editNameTxtField.setText(selection.getName());
+		editArtistTxtField.setText(selection.getArtist());
+		editAlbumTxtField.setText(selection.getAlbum());
+		editYearTxtField.setText(selection.getYear());
+		return;
+	}
+
+	/**
+	 * Makes the changes specified by the user and resets the bottom scene.
+	 * Only allows legal inputs.
+	 */
+	private void finishEditing() {
+		Song editedSong = new Song(editNameTxtField.getText(),
+				editArtistTxtField.getText(),
+				editAlbumTxtField.getText(),
+				editYearTxtField.getText());
+
+		try {
+			if (editedSong.getName().isEmpty() || editedSong.getArtist().isEmpty()) {
+				showAlert("Name or artist cannot be Empty!",
+						"Please enter a song title and/or artist");
+			} else if (isDuplicate(editedSong)) {
+				showAlert("Duplicate song!",
+						"This song already exists. Please edit the song " +
+								"information and try again.");
+			} else if (0 <= Integer.parseInt(editedSong.getYear()) &&
+					Integer.parseInt(editedSong.getYear()) <= 2020) {
+				obsList.remove(songListView.getSelectionModel().getSelectedItem());
+				obsList.add(editedSong);
+				updateSongList(editedSong);
+			}
+		} catch (IllegalArgumentException e) {
+			showAlert("Invalid Input!",
+					"Please enter a valid year up to 2020, or leave it empty");
+		}
+		return;
 	}
 
 	/*
@@ -153,7 +219,7 @@ public class Controller {
 		String year = yearTxtField.getText();
 		
 		if(name.isEmpty() || artist.isEmpty()) {
-			showAlert("Name and Artist Cannot be Empty!", 
+			showAlert("Name and Artist Cannot be Empty!",
 					"Please enter a song title and/or artist");
 		} else {
 			Song newSong = new Song(name, artist, album, year);
