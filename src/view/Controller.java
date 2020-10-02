@@ -35,6 +35,7 @@ public class Controller {
 	@FXML GridPane detailsPane;
 	@FXML GridPane addPane;
 	@FXML GridPane editPane;
+	@FXML GridPane deletePane;
 	@FXML ListView<Song> songListView;
 	@FXML Text nameDetailText;
 	@FXML Text artistDetailText;
@@ -51,6 +52,8 @@ public class Controller {
 	@FXML Button cancelAddBtn;
 	@FXML Button editFinishBtn;
 	@FXML Button editCancelBtn;
+	@FXML Button deleteCancelBtn;
+	@FXML Button deleteConfirmBtn;
 	@FXML TextField editNameTxtField;
 	@FXML TextField editArtistTxtField;
 	@FXML TextField editAlbumTxtField;
@@ -112,12 +115,17 @@ public class Controller {
 			mainPane.setBottom(blankPane);
 			showSongDetails();
 		} else if (b == deleteBtn) {
-//			TODO: CHRIS
+			setToDeletePane();
+		} else if (b == deleteConfirmBtn) {
+			finishDeletion();
+		} else if (b == deleteCancelBtn) {
+			mainPane.setBottom(blankPane);
+			showSongDetails();
 		}
 	}
 
 	/**
-	 * Reloads and alphabetizes the song list.
+	 * Reloads and alphabetizes the song list. Preselects a specified song.
 	 *
 	 * @param selection which song in the song list you'd like to have selected.
 	 */
@@ -126,6 +134,36 @@ public class Controller {
 		songListView.setItems(obsList);
 		songListView.getSelectionModel().select(selection);
 		showSongDetails();
+	}
+
+	/**
+	 * Reloads and alphabetizes the song list. Selects the first song in the list.
+	 */
+	private void updateSongList(){
+		alphabetizeList(obsList);
+		songListView.setItems(obsList);
+		songListView.getSelectionModel().selectFirst();
+		showSongDetails();
+	}
+
+	/**
+	 * Finished deleting selected song and updates view panes.
+	 */
+	private void finishDeletion() {
+		obsList.remove(songListView.getSelectionModel().getSelectedItem());
+		updateSongList();
+	}
+
+	/**
+	 * Sets the bottom pane to the delete scene
+	 */
+	private void setToDeletePane() {
+		if(obsList.isEmpty()) {
+			showAlert("Cannot delete from an empty list!", "");
+			return;
+		}
+		mainPane.setBottom(deletePane);
+		return;
 	}
 
 	/**
@@ -151,6 +189,10 @@ public class Controller {
 				editAlbumTxtField.getText(),
 				editYearTxtField.getText());
 
+		// Remove and store the old version of the song being edited temporarily.
+		Song temp = songListView.getSelectionModel().getSelectedItem();
+		obsList.remove(songListView.getSelectionModel().getSelectedItem());
+
 		try {
 			if (editedSong.getName().isEmpty() || editedSong.getArtist().isEmpty()) {
 				showAlert("Name or artist cannot be Empty!",
@@ -161,13 +203,14 @@ public class Controller {
 								"information and try again.");
 			} else if (0 <= Integer.parseInt(editedSong.getYear()) &&
 					Integer.parseInt(editedSong.getYear()) <= 2020) {
-				obsList.remove(songListView.getSelectionModel().getSelectedItem());
 				obsList.add(editedSong);
 				updateSongList(editedSong);
 			}
 		} catch (IllegalArgumentException e) {
 			showAlert("Invalid Input!",
 					"Please enter a valid year up to 2020, or leave it empty");
+			//Re-add the old version of the song before cancelling.
+			obsList.add(temp);
 		}
 		return;
 	}
