@@ -21,13 +21,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import obj.SongComparator;
 import song.Song;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException; 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class Controller {
 	@FXML BorderPane mainPane;
@@ -73,22 +76,17 @@ public class Controller {
 	 * Alphabetizes a list of songs by name. If duplicate song names exist,
 	 * artist names are then used for order priority. Incomplete - waiting
 	 * for further clarification on some edge cases by the instructors.
-	 * @param list
+	 * @param list the list to be alphabetized.
+	 * @return the alphabetized version of the list.
 	 */
 	public void alphabetizeList(ObservableList<Song> list){
-		Song[] temp = new Song[list.size()];
-		// Store the ordered songs in an array.
-		for(int i=0; i<temp.length; i++){
-			// Iterate through each letter of the alphabet
-			// until covered all letters or we reach the
-			// end of the list.
-			for(int j=0; j < 26 || list.size() == 0; j++){
-				// Compare the current letter to each
-				// song's name.
-				for(int k=0; k < list.size(); k++){
-
-				}
-			}
+		SongComparator sc = new SongComparator();
+		Song[] temp = new Song[obsList.size()];
+		temp = list.toArray(temp);
+		Arrays.sort(temp, sc);
+		list.remove(0, list.size());
+		for(int i=0; i<temp.length; i++) {
+			list.add(temp[i]);
 		}
 		return;
 	}
