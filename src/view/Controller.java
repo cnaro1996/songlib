@@ -150,6 +150,9 @@ public class Controller {
 	private void finishDeletion() {
 		obsList.remove(songListView.getSelectionModel().getSelectedItem());
 		updateSongList();
+		if(obsList.isEmpty()) {
+			clearBottomPane();
+		}
 	}
 
 	/**
@@ -168,12 +171,16 @@ public class Controller {
 	 * Sets the bottom pane to the edit scene
 	 */
 	private void setToEditPane() {
-		mainPane.setBottom(editPane);
 		Song selection = songListView.getSelectionModel().getSelectedItem();
-		editNameTxtField.setText(selection.getName());
-		editArtistTxtField.setText(selection.getArtist());
-		editAlbumTxtField.setText(selection.getAlbum());
-		editYearTxtField.setText(selection.getYear());
+		if (null != selection) {
+			mainPane.setBottom(editPane);
+			editNameTxtField.setText(selection.getName());
+			editArtistTxtField.setText(selection.getArtist());
+			editAlbumTxtField.setText(selection.getAlbum());
+			editYearTxtField.setText(selection.getYear());
+		} else {
+			showAlert("No Song Selected!", "Please select a song to edit");
+		}
 		return;
 	}
 
