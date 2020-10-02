@@ -91,7 +91,7 @@ public class Controller {
 	}
 
 	/**
-	 * Changes the bottom scene based on which button is clicked.
+	 * Changes the scene views based on which button is clicked.
 	 *
 	 * @param e
 	 */
