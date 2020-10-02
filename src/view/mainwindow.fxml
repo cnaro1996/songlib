@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- 
+	Christopher Naro (cjn64)
+	Zabir Rahman (zwr3)
+	Software Methodology
+	Assignment 1: SongLib
+ -->
+
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -7,7 +14,7 @@
 <?import javafx.scene.textfield.*?>
 <?import javafx.geometry.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller = "view.Controller">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml" fx:controller = "view.Controller" fx:id = "mainPane">
     <left>
     	<GridPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="400.0">
 	    	<padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
@@ -27,16 +34,19 @@
 				<RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
-				<Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Add Song" />
-				<Button mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Edit Song" GridPane.rowIndex="1" />
-				<Button mnemonicParsing="false" prefHeight="17.0" prefWidth="130.0" text="Delete Song" GridPane.rowIndex="2" />
+				<Button fx:id = "addBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" 
+					text="Add Song" onAction = "#buttonListener" />
+				<Button fx:id = "editBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" 
+					text="Edit Song" GridPane.rowIndex="1" onAction = "#buttonListener" />
+				<Button fx:id = "deleteBtn" mnemonicParsing="false" prefHeight="17.0" prefWidth="130.0" 
+					text="Delete Song" GridPane.rowIndex="2" onAction = "#buttonListener" />
 			</children>
 		</GridPane>
     </right>
     <bottom>
         <GridPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" fx:id = "blankPane"/>
         <GridPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" 
-			xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" fx:id = "detailsPane">
+			alignment="center" hgap="10" vgap="10" fx:id = "detailsPane">
 			
 			<padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
 			
@@ -49,10 +59,50 @@
 			</rowConstraints>
 			
 			<children>
-				<Text fx:id = "titleDetailText" style="-fx-font: BOLD 45 Arial;" text="Title" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-				<Text fx:id = "artistDetailText" style="-fx-font: NORMAL 40 Arial;" text="Artist" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-				<Text fx:id = "albumDetailText" style="-fx-font: NORMAL 30 Arial;" text="Album" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-				<Text fx:id = "yearDetailText" style="-fx-font: NORMAL 20 Arial;" text="Year" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+				<Text fx:id = "nameDetailText" style="-fx-font: BOLD 45 Arial;" text="Name" 
+					GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+				<Text fx:id = "artistDetailText" style="-fx-font: NORMAL 40 Arial;" text="Artist" 
+					GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+				<Text fx:id = "albumDetailText" style="-fx-font: NORMAL 30 Arial;" text="Album" 
+					GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+				<Text fx:id = "yearDetailText" style="-fx-font: NORMAL 20 Arial;" text="Year" 
+					GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+			</children>
+		</GridPane>
+		<GridPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0" 
+			alignment="center" hgap="10" vgap="10" fx:id = "addPane">
+			
+			<padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+			
+			<columnConstraints>
+				<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+				<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
+			</columnConstraints>
+			
+			<rowConstraints>
+				<RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" />
+			</rowConstraints>
+			
+			<children>
+			    <Text text="Enter the information below for the song you want to add: " 
+			        GridPane.columnIndex="0" GridPane.rowIndex="0"
+			        GridPane.columnSpan="2"/>
+			    <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+			    <TextField fx:id = "nameTxtField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+			 
+			    <Label text="Artist" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+			    <TextField fx:id = "artistTxtField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+			    
+			    <Label text="Album (Optional)" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+			    <TextField fx:id = "albumTxtField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+			    
+			    <Label text="Year (Optional)" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+			    <TextField fx:id = "yearTxtField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+			    
+			    <Button fx:id = "confirmAddBtn" prefHeight="17.0" prefWidth="130.0" 
+					text="Add" GridPane.columnIndex="0" GridPane.rowIndex="5" onAction = "#buttonListener" />
+				<Button fx:id = "cancelAddBtn" prefHeight="17.0" prefWidth="130.0" 
+					text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction = "#buttonListener" />
 			</children>
 		</GridPane>
     </bottom>

@@ -1,19 +1,27 @@
+/*
+ * Christopher Naro	(cjn64)
+ * Zabir Rahman (zwr3)
+ * 
+ * Software Methodology
+ * Assignment 1: SongLib
+ */
+
 package song;
 
 public class Song {
 	String name;
 	String artist;
 	String album;
-	int year;
+	String year;
 	
 	public Song (String name, String artist) {
 		this.name = name;
 		this.artist = artist;
 		this.album = "";
-		this.year = -1;
+		this.year = "";
 	}
 	
-	public Song (String name, String artist, String album, int year) {
+	public Song (String name, String artist, String album, String year) {
 		this.name = name;
 		this.artist = artist;
 		this.album = album;
@@ -44,11 +52,11 @@ public class Song {
 		this.album = album;
 	}
 
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 	
@@ -56,5 +64,15 @@ public class Song {
 	public String toString() {
 		return name + " by " + artist; 
 	}
+	
+	public boolean equals(Song toCompare) {
+		return (this.name.trim().equalsIgnoreCase(toCompare.name.trim()) &&
+				this.artist.trim().equalsIgnoreCase(toCompare.artist.trim()));
+	}
+	
+	public String toFile() {
+		return name + "~" + artist + "~" + album + "~" + year + "\n"; 
+	}
+	
 	
 }
