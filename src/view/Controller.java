@@ -83,8 +83,12 @@ public class Controller {
 		}
 		return;
 	}
-	
 
+	/**
+	 * Changes the bottom scene based on which button is clicked.
+	 *
+	 * @param e
+	 */
 	public void buttonListener(ActionEvent e) {
 		Button b = (Button) e.getSource();
 		if (b == addBtn) {
@@ -107,7 +111,7 @@ public class Controller {
 	private void initList() {		
 		obsList = FXCollections.observableArrayList();
 		readLibraryFromFile();
-//		TODO:  CHRIS - SORT LIST 
+	 	alphabetizeList(obsList);
 		if(!obsList.isEmpty()) {
 			songListView.getSelectionModel().select(0);
 			showSongDetails();
@@ -159,8 +163,8 @@ public class Controller {
 			} else {
 				try {
 					if(0 <= Integer.parseInt(year) && Integer.parseInt(year) <= 2020) {
-//						TODO: CHRIS - ADD SONG IN CORRCT POSITION 
 						obsList.add(newSong);
+						alphabetizeList(obsList);
 						songListView.setItems(obsList);
 						songListView.getSelectionModel().select(newSong);
 						showSongDetails();
