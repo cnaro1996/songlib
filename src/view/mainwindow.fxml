@@ -141,6 +141,31 @@
 						text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction = "#buttonListener" />
 			</children>
 		</GridPane>
+		<GridPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="600.0"
+				  alignment="center" hgap="10" vgap="10" fx:id = "deletePane">
+
+			<padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+			<columnConstraints>
+				<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+				<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
+			</columnConstraints>
+
+			<rowConstraints>
+				<RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" />
+			</rowConstraints>
+
+			<children>
+				<Text text="Are you sure you want to delete this song?"
+					  GridPane.columnIndex="0" GridPane.rowIndex="0"
+					  GridPane.columnSpan="2"/>
+
+				<Button fx:id = "deleteConfirmBtn" prefHeight="17.0" prefWidth="130.0"
+						text="Confirm" GridPane.columnIndex="0" GridPane.rowIndex="5" onAction = "#buttonListener" />
+				<Button fx:id = "deleteCancelBtn" prefHeight="17.0" prefWidth="130.0"
+						text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction = "#buttonListener" />
+			</children>
+		</GridPane>
     </bottom>
     <top>
 		<GridPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" />
