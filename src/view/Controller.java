@@ -109,7 +109,8 @@ public class Controller {
 		} else if(b == editFinishBtn){
 			finishEditing();
 		} else if (b == editCancelBtn) {
-
+			mainPane.setBottom(blankPane);
+			showSongDetails();
 		} else if (b == deleteBtn) {
 //			TODO: CHRIS
 		}
