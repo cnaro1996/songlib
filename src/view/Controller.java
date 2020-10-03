@@ -278,22 +278,26 @@ public class Controller {
 			if(isDuplicate(newSong)) {
 				showAlert("This Song Already Exists!", 
 						"Cannot add because this song already exists");
+			} else if(year.isEmpty()) {
+				obsList.add(newSong);
+				clearBottomPane();
+				updateSongList(newSong);
 			} else {
-				try {
-					if(0 <= Integer.parseInt(year) && Integer.parseInt(year) <= 2020) {
-						obsList.add(newSong);
-						alphabetizeList(obsList);
-						songListView.setItems(obsList);
-						songListView.getSelectionModel().select(newSong);
-						clearBottomPane();
-						showSongDetails();
-					} else {
-						throw new IllegalArgumentException();
+					try {
+						if(0 <= Integer.parseInt(year) && Integer.parseInt(year) <= 2020) {
+							obsList.add(newSong);
+							alphabetizeList(obsList);
+							songListView.setItems(obsList);
+							songListView.getSelectionModel().select(newSong);
+							clearBottomPane();
+							showSongDetails();
+						} else {
+							throw new IllegalArgumentException();
+						}
+					} catch (Exception e) {
+						showAlert("Invalid Input!",
+								"Please enter a valid year up to 2020, or leave it empty");
 					}
-				} catch (Exception e) {
-					showAlert("Invalid Input!", 
-							"Please enter a valid year up to 2020, or leave it empty");
-				}
 			}
 		}
 	}
