@@ -206,7 +206,7 @@ public class Controller {
 				showAlert("Duplicate song!",
 						"This song already exists. Please edit the song " +
 								"information and try again.");
-			} else if (editedSong.getYear().isEmpty()) {
+			} else if (editedSong.getYear().trim().isEmpty()) {
 				obsList.add(editedSong);
 				updateSongList(editedSong);
 			} else if (0 <= Integer.parseInt(editedSong.getYear()) &&
@@ -278,7 +278,7 @@ public class Controller {
 			if(isDuplicate(newSong)) {
 				showAlert("This Song Already Exists!", 
 						"Cannot add because this song already exists");
-			} else if(year.isEmpty()) {
+			} else if(year.trim().isEmpty()) {
 				obsList.add(newSong);
 				clearBottomPane();
 				updateSongList(newSong);
