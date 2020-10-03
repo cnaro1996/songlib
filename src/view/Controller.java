@@ -213,12 +213,16 @@ public class Controller {
 					Integer.parseInt(editedSong.getYear()) <= 2020) {
 				obsList.add(editedSong);
 				updateSongList(editedSong);
+			} else {
+				throw new IllegalArgumentException();
 			}
 		} catch (IllegalArgumentException e) {
+			obsList.add(temp);
+			updateSongList(temp);
 			showAlert("Invalid Input!",
 					"Please enter a valid year up to 2020, or leave it empty");
 			//Re-add the old version of the song before canceling.
-			obsList.add(temp);
+
 		}
 		return;
 	}
