@@ -206,6 +206,9 @@ public class Controller {
 				showAlert("Duplicate song!",
 						"This song already exists. Please edit the song " +
 								"information and try again.");
+			} else if (editedSong.getYear().isEmpty()) {
+				obsList.add(editedSong);
+				updateSongList(editedSong);
 			} else if (0 <= Integer.parseInt(editedSong.getYear()) &&
 					Integer.parseInt(editedSong.getYear()) <= 2020) {
 				obsList.add(editedSong);
