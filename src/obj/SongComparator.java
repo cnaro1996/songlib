@@ -13,11 +13,11 @@ import song.Song;
 public class SongComparator implements Comparator<Song> {
     public int compare(Song s1, Song s2) {
         // First compare song names
-        if(s1.getName().toLowerCase().compareTo(s2.getName().toLowerCase()) == 0) {
+        if(s1.getName().compareTo(s2.getName()) == 0) {
             // If they have the same name, compare artist names.
-            return s1.getArtist().toLowerCase().compareTo(s2.getArtist().toLowerCase());
+            return s1.getArtist().compareTo(s2.getArtist());
         } else {
-            return s1.getName().toLowerCase().compareTo(s2.getName().toLowerCase());
+            return s1.getName().compareTo(s2.getName());
         }
     }
 }
