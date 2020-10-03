@@ -202,19 +202,17 @@ public class Controller {
 			if (editedSong.getName().isEmpty() || editedSong.getArtist().isEmpty()) {
 				showAlert("Name or artist cannot be Empty!",
 						"Please enter a song title and/or artist");
-			} else {
-				if (isDuplicate(editedSong)) {
-					showAlert("This Song Already Exists!", 
-							"Cannot add because this song already exists");
-				} else {
-					if (0 <= Integer.parseInt(editedSong.getYear()) &&
-							Integer.parseInt(editedSong.getYear()) <= 2020) {
-						obsList.add(editedSong);
-						updateSongList(editedSong);
-					} else {
-						throw new IllegalArgumentException();
-					}
-				}
+			} else if (isDuplicate(editedSong)) {
+				showAlert("Duplicate song!",
+						"This song already exists. Please edit the song " +
+								"information and try again.");
+			} else if (editedSong.getYear().isEmpty()) {
+				obsList.add(editedSong);
+				updateSongList(editedSong);
+			} else if (0 <= Integer.parseInt(editedSong.getYear()) &&
+					Integer.parseInt(editedSong.getYear()) <= 2020) {
+				obsList.add(editedSong);
+				updateSongList(editedSong);
 			}
 		} catch (IllegalArgumentException e) {
 			showAlert("Invalid Input!",
