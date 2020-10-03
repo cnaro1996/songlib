@@ -1,3 +1,10 @@
+/*
+ * Christopher Naro	(cjn64)
+ * Zabir Rahman (zwr3)
+ *
+ * Software Methodology
+ * Assignment 1: SongLib
+ */
 package obj;
 
 import java.util.Comparator;
