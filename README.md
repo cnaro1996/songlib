@@ -5,13 +5,13 @@ Note: the application merely simulates a song library. It does not play music.
 (however, implementing that functionality would be quite trivial!)
 
 ## Viewing Song Details
-![view song details](https://github.com/cnaro1996/songlib/img/1.png)
+![view song details](https://github.com/cnaro1996/songlib/tree/master/img/1.png)
 
 ## Editing Song Details
-![view song details](https://github.com/cnaro1996/songlib/img/2.png)
+![view song details](https://github.com/cnaro1996/songlib/tree/master/img/2.png)
 
 ## Deleting Songs
-![view song details](https://github.com/cnaro1996/songlib/img/3.png)
+![view song details](https://github.com/cnaro1996/songlib/tree/master/img/3.png)
 
 ## Adding New Songs
-![view song details](https://github.com/cnaro1996/songlib/img/4.png)
+![view song details](https://github.com/cnaro1996/songlib/tree/master/img/4.png)
